@@ -16,7 +16,7 @@ local-modified-apps :=
 
 local-modified-priv-apps :=
 
-local-modified-jars :=
+local-modified-jars := oppo-framework
 
 # All apks from MIUI
 local-miui-removed-apps := 
