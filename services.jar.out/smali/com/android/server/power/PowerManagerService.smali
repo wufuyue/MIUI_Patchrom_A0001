@@ -10936,16 +10936,34 @@
 
     iput v2, v0, Lcom/android/server/power/PowerManagerService;->mDirty:I
 
-    .line 683
     invoke-direct/range {p0 .. p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
 
-    .line 684
     monitor-exit v18
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 685
+    move-object/from16 v0, p0
+
+    iget-object v2, v0, Lcom/android/server/power/PowerManagerService;->mContext:Landroid/content/Context;
+
+    move-object/from16 v0, p0
+
+    iget-object v3, v0, Lcom/android/server/power/PowerManagerService;->mHandler:Lcom/android/server/power/PowerManagerService$PowerManagerHandler;
+
+    move-object/from16 v0, p0
+
+    iget-object v4, v0, Lcom/android/server/power/PowerManagerService;->mLightsService:Lcom/android/server/LightsService;
+
+    const/4 v5, 0x2
+
+    invoke-virtual {v4, v5}, Lcom/android/server/LightsService;->getLight(I)Lcom/android/server/LightsService$Light;
+
+    move-result-object v4
+
+    invoke-static {v2, v3, v4}, Lcom/android/server/power/ButtonLightController;->setButtonLight(Landroid/content/Context;Landroid/os/Handler;Lcom/android/server/LightsService$Light;)V
+
     return-void
 
-    .line 684
     .end local v14    # "filter":Landroid/content/IntentFilter;
     .end local v15    # "pm":Landroid/os/PowerManager;
     .end local v16    # "resolver":Landroid/content/ContentResolver;
@@ -10953,9 +10971,10 @@
     :catchall_0
     move-exception v2
 
+    :try_start_1
     monitor-exit v18
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+    :try_end_1
+    .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
     throw v2
 .end method

@@ -133,6 +133,16 @@
 
 .field public wapiUserCert:Ljava/lang/String;
 
+.field public wapiASCert:Ljava/lang/String;
+
+.field public wapiCertIndex:I
+
+.field public wapiPsk:Ljava/lang/String;
+
+.field public wapiPskType:I
+
+.field public wapiUserCert:Ljava/lang/String;
+
 .field public wepKeys:[Ljava/lang/String;
 
 .field public wepTxKeyIndex:I
@@ -280,6 +290,18 @@
 
     .line 432
     :cond_0
+    const/4 v1, 0x0
+
+    iput-object v1, p0, Landroid/net/wifi/WifiConfiguration;->wapiASCert:Ljava/lang/String;
+
+    iput-object v1, p0, Landroid/net/wifi/WifiConfiguration;->wapiUserCert:Ljava/lang/String;
+
+    const/4 v1, -0x1
+    
+    iput v1, p0, Landroid/net/wifi/WifiConfiguration;->wapiCertIndex:I
+
+    iput v1, p0, Landroid/net/wifi/WifiConfiguration;->wapiPskType:I
+
     new-instance v1, Landroid/net/wifi/WifiEnterpriseConfig;
 
     invoke-direct {v1}, Landroid/net/wifi/WifiEnterpriseConfig;-><init>()V
@@ -327,50 +349,52 @@
     .param p1, "source"    # Landroid/net/wifi/WifiConfiguration;
 
     .prologue
-    .line 709
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    .line 710
     if-eqz p1, :cond_1
 
-    .line 711
     iget v1, p1, Landroid/net/wifi/WifiConfiguration;->networkId:I
 
     iput v1, p0, Landroid/net/wifi/WifiConfiguration;->networkId:I
 
-    .line 712
     iget v1, p1, Landroid/net/wifi/WifiConfiguration;->status:I
 
     iput v1, p0, Landroid/net/wifi/WifiConfiguration;->status:I
 
-    .line 713
     iget v1, p1, Landroid/net/wifi/WifiConfiguration;->disableReason:I
 
     iput v1, p0, Landroid/net/wifi/WifiConfiguration;->disableReason:I
 
-    .line 714
     iget-object v1, p1, Landroid/net/wifi/WifiConfiguration;->SSID:Ljava/lang/String;
 
     iput-object v1, p0, Landroid/net/wifi/WifiConfiguration;->SSID:Ljava/lang/String;
 
-    .line 715
     iget-object v1, p1, Landroid/net/wifi/WifiConfiguration;->BSSID:Ljava/lang/String;
 
     iput-object v1, p0, Landroid/net/wifi/WifiConfiguration;->BSSID:Ljava/lang/String;
 
-    .line 716
     iget-object v1, p1, Landroid/net/wifi/WifiConfiguration;->preSharedKey:Ljava/lang/String;
 
     iput-object v1, p0, Landroid/net/wifi/WifiConfiguration;->preSharedKey:Ljava/lang/String;
 
-    .line 718
+    const/4 v1, 0x0
+    
+    iput-object v1, p0, Landroid/net/wifi/WifiConfiguration;->wapiASCert:Ljava/lang/String;
+
+    iput-object v1, p0, Landroid/net/wifi/WifiConfiguration;->wapiUserCert:Ljava/lang/String;
+
+    const/4 v1, -0x1
+
+    iput v1, p0, Landroid/net/wifi/WifiConfiguration;->wapiCertIndex:I
+
+    iput v1, p0, Landroid/net/wifi/WifiConfiguration;->wapiPskType:I
+
     const/4 v1, 0x4
 
     new-array v1, v1, [Ljava/lang/String;
 
     iput-object v1, p0, Landroid/net/wifi/WifiConfiguration;->wepKeys:[Ljava/lang/String;
 
-    .line 719
     const/4 v0, 0x0
 
     .local v0, "i":I
@@ -1822,57 +1846,62 @@
     .param p2, "flags"    # I
 
     .prologue
-    .line 755
     iget v4, p0, Landroid/net/wifi/WifiConfiguration;->networkId:I
 
     invoke-virtual {p1, v4}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 756
     iget v4, p0, Landroid/net/wifi/WifiConfiguration;->status:I
 
     invoke-virtual {p1, v4}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 757
     iget v4, p0, Landroid/net/wifi/WifiConfiguration;->disableReason:I
 
     invoke-virtual {p1, v4}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 758
     iget-object v4, p0, Landroid/net/wifi/WifiConfiguration;->SSID:Ljava/lang/String;
 
     invoke-virtual {p1, v4}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
-    .line 759
     iget-object v4, p0, Landroid/net/wifi/WifiConfiguration;->BSSID:Ljava/lang/String;
 
     invoke-virtual {p1, v4}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
-    .line 760
     iget-object v4, p0, Landroid/net/wifi/WifiConfiguration;->preSharedKey:Ljava/lang/String;
 
     invoke-virtual {p1, v4}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
-    .line 762
     iget-object v4, p0, Landroid/net/wifi/WifiConfiguration;->wapiASCert:Ljava/lang/String;
 
     invoke-virtual {p1, v4}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
-    .line 763
     iget-object v4, p0, Landroid/net/wifi/WifiConfiguration;->wapiUserCert:Ljava/lang/String;
 
     invoke-virtual {p1, v4}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
-    .line 764
     iget-object v4, p0, Landroid/net/wifi/WifiConfiguration;->wapiPsk:Ljava/lang/String;
 
     invoke-virtual {p1, v4}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
-    .line 765
     iget v4, p0, Landroid/net/wifi/WifiConfiguration;->wapiPskType:I
 
     invoke-virtual {p1, v4}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 767
+    iget-object v4, p0, Landroid/net/wifi/WifiConfiguration;->wapiASCert:Ljava/lang/String;
+
+    invoke-virtual {p1, v4}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
+
+    iget-object v4, p0, Landroid/net/wifi/WifiConfiguration;->wapiUserCert:Ljava/lang/String;
+
+    invoke-virtual {p1, v4}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
+
+    iget-object v4, p0, Landroid/net/wifi/WifiConfiguration;->wapiPsk:Ljava/lang/String;
+
+    invoke-virtual {p1, v4}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
+
+    iget v4, p0, Landroid/net/wifi/WifiConfiguration;->wapiPskType:I
+
+    invoke-virtual {p1, v4}, Landroid/os/Parcel;->writeInt(I)V
+
     iget-object v0, p0, Landroid/net/wifi/WifiConfiguration;->wepKeys:[Ljava/lang/String;
 
     .local v0, "arr$":[Ljava/lang/String;

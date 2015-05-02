@@ -118,25 +118,32 @@
 
     move-result v2
 
-    .line 3708
     .local v2, "result":I
+     const/16 v3, 0x63
+
+     if-ne v2, v3, :cond_miui_0
+
+     const/4 v3, 0x0
+
+     return v3
+
+    :cond_miui_0
+    const/4 v3, 0x1
+
     if-ne v2, v3, :cond_0
 
-    .line 3727
     .end local v0    # "event":Landroid/view/InputEvent;
     .end local v1    # "imm":Landroid/view/inputmethod/InputMethodManager;
     .end local v2    # "result":I
     :goto_0
     return v3
 
-    .line 3710
     .restart local v0    # "event":Landroid/view/InputEvent;
     .restart local v1    # "imm":Landroid/view/inputmethod/InputMethodManager;
     .restart local v2    # "result":I
     :cond_0
     if-nez v2, :cond_1
 
-    .line 3717
     const-string v3, "ViewRootImpl"
 
     const-string v5, " kevin change to FORWARD"

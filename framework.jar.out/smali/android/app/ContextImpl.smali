@@ -593,6 +593,8 @@
 
     invoke-static {v0}, Landroid/app/ColorInjector$ContextImpl;->registerServices(Landroid/app/ColorInjector$ContextImpl$ServiceRegister;)V
 
+    invoke-static {}, Landroid/app/ContextImpl;->registerMiuiServices()V
+
     .line 608
     return-void
 .end method
@@ -788,24 +790,27 @@
 
     move-result-object v9
 
-    .line 2071
     :cond_4
     iput-object v9, p0, Landroid/app/ContextImpl;->mResources:Landroid/content/res/Resources;
 
-    .line 2073
+    iget-object v1, p0, Landroid/app/ContextImpl;->mResources:Landroid/content/res/Resources;
+
+    iget-object v2, p0, Landroid/app/ContextImpl;->mPackageInfo:Landroid/app/LoadedApk;
+
+    iget-object v2, v2, Landroid/app/LoadedApk;->mPackageName:Ljava/lang/String;
+
+    invoke-static {v1, v2}, Landroid/miui/ResourcesManager;->initMiuiResource(Landroid/content/res/Resources;Ljava/lang/String;)V
+
     if-eqz p1, :cond_5
 
-    .line 2074
     iget-object v1, p1, Landroid/app/ContextImpl;->mBasePackageName:Ljava/lang/String;
 
     iput-object v1, p0, Landroid/app/ContextImpl;->mBasePackageName:Ljava/lang/String;
 
-    .line 2075
     iget-object v1, p1, Landroid/app/ContextImpl;->mOpPackageName:Ljava/lang/String;
 
     iput-object v1, p0, Landroid/app/ContextImpl;->mOpPackageName:Ljava/lang/String;
 
-    .line 2100
     :goto_0
     new-instance v1, Landroid/app/ContextImpl$ApplicationContentResolver;
 
@@ -1956,6 +1961,21 @@
     invoke-direct {v0, v1}, Ljava/lang/IllegalArgumentException;-><init>(Ljava/lang/String;)V
 
     throw v0
+.end method
+
+.method static registerMiuiServices()V
+    .locals 2
+
+    .prologue
+    const-string v0, "security"
+
+    new-instance v1, Landroid/app/ContextImpl$SecurityServiceFetcher;
+
+    invoke-direct {v1}, Landroid/app/ContextImpl$SecurityServiceFetcher;-><init>()V
+
+    invoke-static {v0, v1}, Landroid/app/ContextImpl;->registerService(Ljava/lang/String;Landroid/app/ContextImpl$ServiceFetcher;)V
+
+    return-void
 .end method
 
 .method private registerReceiverInternal(Landroid/content/BroadcastReceiver;ILandroid/content/IntentFilter;Ljava/lang/String;Landroid/os/Handler;Landroid/content/Context;)Landroid/content/Intent;

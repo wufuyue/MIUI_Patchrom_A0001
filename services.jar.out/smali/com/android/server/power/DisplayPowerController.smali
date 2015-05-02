@@ -4258,25 +4258,22 @@
 
     if-eq v0, p1, :cond_0
 
-    .line 940
     iget-object v0, p0, Lcom/android/server/power/DisplayPowerController;->mPowerState:Lcom/android/server/power/DisplayPowerState;
 
     invoke-virtual {v0, p1}, Lcom/android/server/power/DisplayPowerState;->setScreenOn(Z)V
 
-    .line 941
     if-eqz p1, :cond_1
 
-    .line 942
     iget-object v0, p0, Lcom/android/server/power/DisplayPowerController;->mNotifier:Lcom/android/server/power/Notifier;
 
     invoke-virtual {v0}, Lcom/android/server/power/Notifier;->onScreenOn()V
 
-    .line 947
-    :cond_0
     :goto_0
+    invoke-static {p1}, Lcom/android/server/power/ButtonLightController;->setScreenOn(Z)V
+
+    :cond_0
     return-void
 
-    .line 944
     :cond_1
     iget-object v0, p0, Lcom/android/server/power/DisplayPowerController;->mNotifier:Lcom/android/server/power/Notifier;
 

@@ -4398,6 +4398,21 @@
 
     .line 750
     :try_start_1
+    iget v0, v7, Landroid/view/WindowManager$LayoutParams;->flags:I
+
+    and-int/lit8 v0, v0, 0x4
+
+    if-eqz v0, :cond_miui_0
+
+    iget-object v0, p0, Lcom/android/server/wm/WindowStateAnimator;->mSurfaceControl:Landroid/view/SurfaceControl;
+
+    const/16 v1, 0x80
+
+    const/16 v2, 0x80
+
+    invoke-virtual {v0, v1, v2}, Landroid/view/SurfaceControl;->setFlags(II)V
+
+    :cond_miui_0
     iget-object v0, p0, Lcom/android/server/wm/WindowStateAnimator;->mWin:Lcom/android/server/wm/WindowState;
 
     iget-object v0, v0, Lcom/android/server/wm/WindowState;->mFrame:Landroid/graphics/Rect;
@@ -7076,27 +7091,27 @@
 
     invoke-static {v3, v4}, Landroid/util/Slog;->v(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 1229
     :cond_0
     iput-boolean v9, v2, Lcom/android/server/wm/WindowState;->mOrientationChanging:Z
 
-    .line 1344
+    iget v3, p0, Lcom/android/server/wm/WindowStateAnimator;->mAttrType:I
+
+    const/16 v4, 0x7dd
+
+    if-eq v3, v4, :cond_2
+
     :cond_1
     :goto_0
     return-void
 
-    .line 1234
     :cond_2
     const/4 v0, 0x0
 
-    .line 1236
     .local v0, "displayed":Z
     invoke-virtual {p0}, Lcom/android/server/wm/WindowStateAnimator;->computeShownFrameLocked()V
 
-    .line 1238
     invoke-virtual {p0, p1}, Lcom/android/server/wm/WindowStateAnimator;->setSurfaceBoundariesLocked(Z)V
 
-    .line 1240
     iget-boolean v3, p0, Lcom/android/server/wm/WindowStateAnimator;->mIsWallpaper:Z
 
     if-eqz v3, :cond_5

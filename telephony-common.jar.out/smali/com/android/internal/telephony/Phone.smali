@@ -589,6 +589,9 @@
 .method public abstract getModemVersion()Ljava/lang/String;
 .end method
 
+.method public abstract getMiuiIccPhoneBookInterfaceManager()Lcom/android/internal/telephony/MiuiIccPhoneBookInterfaceManager;
+.end method
+
 .method public abstract getMsisdn()Ljava/lang/String;
 .end method
 

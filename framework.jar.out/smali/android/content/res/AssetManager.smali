@@ -105,54 +105,43 @@
     .prologue
     const/4 v1, 0x1
 
-    .line 92
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    .line 68
     new-instance v0, Landroid/util/TypedValue;
 
     invoke-direct {v0}, Landroid/util/TypedValue;-><init>()V
 
     iput-object v0, p0, Landroid/content/res/AssetManager;->mValue:Landroid/util/TypedValue;
 
-    .line 69
     const/4 v0, 0x2
 
     new-array v0, v0, [J
 
     iput-object v0, p0, Landroid/content/res/AssetManager;->mOffsets:[J
 
-    .line 75
     const/4 v0, 0x0
 
     iput-object v0, p0, Landroid/content/res/AssetManager;->mStringBlocks:[Landroid/content/res/StringBlock;
 
-    .line 77
     iput v1, p0, Landroid/content/res/AssetManager;->mNumRefs:I
 
-    .line 78
     iput-boolean v1, p0, Landroid/content/res/AssetManager;->mOpen:Z
 
-    .line 93
     monitor-enter p0
 
-    .line 98
     :try_start_0
     invoke-direct {p0}, Landroid/content/res/AssetManager;->init()V
 
-    .line 100
     invoke-static {}, Landroid/content/res/AssetManager;->ensureSystemAssets()V
 
-    .line 103
     invoke-static {p0}, Landroid/content/res/OppoResourceHelper;->addExtraAssetPaths(Landroid/content/res/AssetManager;)V
 
-    .line 105
+    invoke-static {p0}, Landroid/miui/ResourcesManager;->addSystemAssets(Landroid/content/res/AssetManager;)V
+
     monitor-exit p0
 
-    .line 106
     return-void
 
-    .line 105
     :catchall_0
     move-exception v0
 
@@ -175,41 +164,34 @@
     .prologue
     const/4 v1, 0x1
 
-    .line 122
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    .line 68
     new-instance v0, Landroid/util/TypedValue;
 
     invoke-direct {v0}, Landroid/util/TypedValue;-><init>()V
 
     iput-object v0, p0, Landroid/content/res/AssetManager;->mValue:Landroid/util/TypedValue;
 
-    .line 69
     const/4 v0, 0x2
 
     new-array v0, v0, [J
 
     iput-object v0, p0, Landroid/content/res/AssetManager;->mOffsets:[J
 
-    .line 75
     const/4 v0, 0x0
 
     iput-object v0, p0, Landroid/content/res/AssetManager;->mStringBlocks:[Landroid/content/res/StringBlock;
 
-    .line 77
     iput v1, p0, Landroid/content/res/AssetManager;->mNumRefs:I
 
-    .line 78
     iput-boolean v1, p0, Landroid/content/res/AssetManager;->mOpen:Z
 
-    .line 129
     invoke-direct {p0}, Landroid/content/res/AssetManager;->init()V
 
-    .line 133
     invoke-static {p0}, Landroid/content/res/OppoResourceHelper;->addExtraAssetPaths(Landroid/content/res/AssetManager;)V
 
-    .line 135
+    invoke-static {p0}, Landroid/miui/ResourcesManager;->addSystemAssets(Landroid/content/res/AssetManager;)V
+
     return-void
 .end method
 

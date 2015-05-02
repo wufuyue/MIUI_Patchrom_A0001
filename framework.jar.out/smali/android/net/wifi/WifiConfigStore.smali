@@ -97,6 +97,8 @@
 
 .field private mWifiAutoConnect:Landroid/net/wifi/cmcc/WifiAutoConnectOP01;
 
+.field private mWifiAutoConnController:Landroid/net/wifi/WifiAutoConnController;
+
 .field private mWifiNative:Landroid/net/wifi/WifiNative;
 
 
@@ -144,6 +146,17 @@
     .param p2, "wn"    # Landroid/net/wifi/WifiNative;
 
     .prologue
+    iget-object v3, p0, Landroid/net/wifi/WifiConfigStore;->mWifiAutoConnController:Landroid/net/wifi/WifiAutoConnController;
+
+    invoke-virtual {v3}, Landroid/net/wifi/WifiAutoConnController;->shouldEnableAllNetworks()Z
+
+    move-result v3
+
+    if-nez v3, :cond_miui_0
+
+    return-void
+
+    :cond_miui_0
     const/4 v2, 0x0
 
     .line 184
@@ -3495,7 +3508,6 @@
     move-result-object v1
 
     .local v1, "i$":Ljava/util/Iterator;
-    :cond_0
     :goto_0
     invoke-interface {v1}, Ljava/util/Iterator;->hasNext()Z
 
@@ -7012,6 +7024,16 @@
 
     if-eq v3, v5, :cond_1
 
+    iget-object v3, p0, Landroid/net/wifi/WifiConfigStore;->mWifiAutoConnController:Landroid/net/wifi/WifiAutoConnController;
+
+    iget-object v4, v0, Landroid/net/wifi/WifiConfiguration;->SSID:Ljava/lang/String;
+
+    invoke-virtual {v3, v4}, Landroid/net/wifi/WifiAutoConnController;->isDisableByUser(Ljava/lang/String;)Z
+
+    move-result v3
+
+    if-nez v3, :cond_0
+
     .line 507
     iget-object v3, p0, Landroid/net/wifi/WifiConfigStore;->mWifiNative:Landroid/net/wifi/WifiNative;
 
@@ -7656,6 +7678,13 @@
 
     goto :goto_0
 
+    :cond_0
+    iget-object v3, p0, Landroid/net/wifi/WifiConfigStore;->mWifiAutoConnController:Landroid/net/wifi/WifiAutoConnController;
+
+    invoke-virtual {v3, v0}, Landroid/net/wifi/WifiAutoConnController;->disableNetwork(Landroid/net/wifi/WifiConfiguration;)V
+
+    goto :goto_0
+
     .line 399
     .end local v0    # "config":Landroid/net/wifi/WifiConfiguration;
     :cond_2
@@ -7960,37 +7989,33 @@
     .locals 2
 
     .prologue
-    .line 226
     const-string v0, "Loading config and enabling all networks"
 
     invoke-direct {p0, v0}, Landroid/net/wifi/WifiConfigStore;->log(Ljava/lang/String;)V
 
-    .line 230
     iget-object v1, p0, Landroid/net/wifi/WifiConfigStore;->mDisconnectNetworks:Ljava/util/List;
 
     monitor-enter v1
 
-    .line 231
     :try_start_0
     iget-object v0, p0, Landroid/net/wifi/WifiConfigStore;->mDisconnectNetworks:Ljava/util/List;
 
     invoke-interface {v0}, Ljava/util/List;->clear()V
 
-    .line 232
     monitor-exit v1
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 235
+    iget-object v0, p0, Landroid/net/wifi/WifiConfigStore;->mWifiAutoConnController:Landroid/net/wifi/WifiAutoConnController;
+
+    invoke-virtual {v0}, Landroid/net/wifi/WifiAutoConnController;->loadAndEnableAllNetworks()V
+
     invoke-virtual {p0}, Landroid/net/wifi/WifiConfigStore;->loadConfiguredNetworks()V
 
-    .line 236
     invoke-virtual {p0}, Landroid/net/wifi/WifiConfigStore;->enableAllNetworks()V
 
-    .line 237
     return-void
 
-    .line 232
     :catchall_0
     move-exception v0
 
@@ -9280,20 +9305,22 @@
 
     goto :goto_0
 
-    .line 364
     :pswitch_1
     iget v1, v0, Landroid/net/wifi/WifiConfiguration;->status:I
 
-    if-nez v1, :cond_0
+    if-nez v1, :cond_miui_0
 
-    .line 365
     const/4 v1, 0x2
 
     iput v1, v0, Landroid/net/wifi/WifiConfiguration;->status:I
 
+    :cond_miui_0
+    iget-object v1, p0, Landroid/net/wifi/WifiConfigStore;->mWifiAutoConnController:Landroid/net/wifi/WifiAutoConnController;
+
+    invoke-virtual {v1, v0}, Landroid/net/wifi/WifiAutoConnController;->disConnect(Landroid/net/wifi/WifiConfiguration;)V
+
     goto :goto_0
 
-    .line 358
     :pswitch_data_0
     .packed-switch 0x1
         :pswitch_0
