@@ -1,0 +1,5 @@
+/log/*
+/out/*
+/temp/*
+releasetools.pyc
+stockrom.zip
