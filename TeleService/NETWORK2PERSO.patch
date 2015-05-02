@@ -1,0 +1,23 @@
+From d7047ad7fe260e9c9c62c1f88f8b2d294ad1d166 Mon Sep 17 00:00:00 2001
+From: shumxin <shumxin@sina.com>
+Date: Fri, 1 May 2015 20:30:25 +0800
+Subject: [PATCH] NETWORK2PERSO
+
+---
+ TeleService/smali/com/android/phone/PhoneGlobals.smali | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+--- a/TeleService/smali/com/android/phone/PhoneGlobals.smali
++++ b/TeleService/smali/com/android/phone/PhoneGlobals.smali
+@@ -2066,7 +2066,7 @@
+ 
+     const/4 v2, 0x3
+ 
+-    invoke-interface {v0, v1, v2, v10}, Lcom/android/internal/telephony/IccCard;->registerForNetworkLocked(Landroid/os/Handler;ILjava/lang/Object;)V
++    invoke-interface {v0, v1, v2, v10}, Lcom/android/internal/telephony/IccCard;->registerForPersoLocked(Landroid/os/Handler;ILjava/lang/Object;)V
+ 
+     :cond_2
+     iget-object v0, p0, Lcom/android/phone/PhoneGlobals;->mCM:Lcom/android/internal/telephony/CallManager;
+-- 
+1.9.1
+

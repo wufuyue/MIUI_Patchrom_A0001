@@ -23,7 +23,7 @@ local-miui-removed-apps :=
 
 local-miui-removed-priv-apps := 
 
-local-miui-modified-apps := MiuiFramework MiuiHome 
+local-miui-modified-apps := MiuiFramework MiuiHome MiuiSystemUI TeleService
 
 local-density := XXHDPI
 

@@ -1,0 +1,35 @@
+From ded9de970e5eb08facd66dcdd11abd58258048ac Mon Sep 17 00:00:00 2001
+From: shumxin <shumxin@sina.com>
+Date: Fri, 1 May 2015 22:11:34 +0800
+Subject: [PATCH] NETWORK2PERSO
+
+---
+ .../com/android/systemui/statusbar/phone/PhoneStatusBarPolicy.smali     | 2 +-
+ .../com/android/systemui/statusbar/policy/BaseNetworkController.smali   | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+--- a/MiuiSystemUI/smali/com/android/systemui/statusbar/phone/PhoneStatusBarPolicy.smali
++++ b/MiuiSystemUI/smali/com/android/systemui/statusbar/phone/PhoneStatusBarPolicy.smali
+@@ -1683,7 +1683,7 @@
+     goto :goto_0
+ 
+     :cond_3
+-    sget-object v2, Lcom/android/internal/telephony/IccCardConstants$State;->NETWORK_LOCKED:Lcom/android/internal/telephony/IccCardConstants$State;
++    sget-object v2, Lcom/android/internal/telephony/IccCardConstants$State;->PERSO_LOCKED:Lcom/android/internal/telephony/IccCardConstants$State;
+ 
+     iput-object v2, p0, Lcom/android/systemui/statusbar/phone/PhoneStatusBarPolicy;->mSimState:Lcom/android/internal/telephony/IccCardConstants$State;
+ 
+--- a/MiuiSystemUI/smali/com/android/systemui/statusbar/policy/BaseNetworkController.smali
++++ b/MiuiSystemUI/smali/com/android/systemui/statusbar/policy/BaseNetworkController.smali
+@@ -7262,7 +7262,7 @@
+     goto :goto_0
+ 
+     :cond_4
+-    sget-object v0, Lcom/android/internal/telephony/IccCardConstants$State;->NETWORK_LOCKED:Lcom/android/internal/telephony/IccCardConstants$State;
++    sget-object v0, Lcom/android/internal/telephony/IccCardConstants$State;->PERSO_LOCKED:Lcom/android/internal/telephony/IccCardConstants$State;
+ 
+     goto :goto_0
+ 
+-- 
+1.9.1
+
