@@ -40037,21 +40037,6 @@
     return-void
 .end method
 
-.method public reboot()V
-    .locals 3
-
-    .prologue
-    iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mContext:Landroid/content/Context;
-
-    const/4 v1, 0x0
-
-    const/4 v2, 0x1
-
-    invoke-static {v0, v1, v2}, Lcom/android/server/power/ShutdownThread;->reboot(Landroid/content/Context;Ljava/lang/String;Z)V
-
-    return-void
-.end method
-
 .method public rebootSafeMode(Z)V
     .locals 1
     .param p1, "confirm"    # Z
@@ -45260,19 +45245,19 @@
 
     and-int/lit16 v0, v0, 0x7d0
 
-    if-eqz v0, :cond_0
+    #if-eqz v0, :cond_0
 
     .line 11317
-    iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
+    #iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
 
-    check-cast v0, Landroid/view/OppoWindowManagerPolicy;
+    #check-cast v0, Landroid/view/OppoWindowManagerPolicy;
 
-    const/4 v1, 0x0
+    #const/4 v1, 0x0
 
-    invoke-interface {v0, v1}, Landroid/view/OppoWindowManagerPolicy;->rm_add_StatusBarRunnable(I)V
+    #invoke-interface {v0, v1}, Landroid/view/OppoWindowManagerPolicy;->rm_add_StatusBarRunnable(I)V
 
     .line 11319
-    :cond_0
+    #:cond_0
     return-void
 .end method
 

@@ -58,10 +58,6 @@
 
 .field static final TRANSACTION_onSystemReady:I = 0xf
 
-.field static final TRANSACTION_onSystemReadyForColorOS:I = 0x17
-
-.field static final TRANSACTION_setColorOSKeyguardService:I = 0x16
-
 .field static final TRANSACTION_setCurrentUser:I = 0x11
 
 .field static final TRANSACTION_setHidden:I = 0x8
@@ -652,57 +648,6 @@
 
     goto/16 :goto_0
 
-    .line 213
-    :sswitch_16
-    const-string v3, "com.android.internal.policy.IKeyguardService"
-
-    invoke-virtual {p2, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
-
-    .line 215
-    invoke-virtual {p2}, Landroid/os/Parcel;->readStrongBinder()Landroid/os/IBinder;
-
-    move-result-object v3
-
-    invoke-static {v3}, Lcom/android/internal/policy/IColorOSKeyguardService$Stub;->asInterface(Landroid/os/IBinder;)Lcom/android/internal/policy/IColorOSKeyguardService;
-
-    move-result-object v0
-
-    .line 216
-    .local v0, "_arg0":Lcom/android/internal/policy/IColorOSKeyguardService;
-    invoke-virtual {p0, v0}, Lcom/android/internal/policy/IKeyguardService$Stub;->setColorOSKeyguardService(Lcom/android/internal/policy/IColorOSKeyguardService;)V
-
-    goto/16 :goto_0
-
-    .line 221
-    .end local v0    # "_arg0":Lcom/android/internal/policy/IColorOSKeyguardService;
-    :sswitch_17
-    const-string v5, "com.android.internal.policy.IKeyguardService"
-
-    invoke-virtual {p2, v5}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
-
-    .line 223
-    invoke-virtual {p2}, Landroid/os/Parcel;->readInt()I
-
-    move-result v5
-
-    if-eqz v5, :cond_b
-
-    move v0, v4
-
-    .line 224
-    .local v0, "_arg0":Z
-    :goto_7
-    invoke-virtual {p0, v0}, Lcom/android/internal/policy/IKeyguardService$Stub;->onSystemReadyForColorOS(Z)V
-
-    goto/16 :goto_0
-
-    .end local v0    # "_arg0":Z
-    :cond_b
-    move v0, v3
-
-    .line 223
-    goto :goto_7
-
     .line 38
     nop
 
@@ -729,8 +674,6 @@
         0x13 -> :sswitch_13
         0x14 -> :sswitch_14
         0x15 -> :sswitch_15
-        0x16 -> :sswitch_16
-        0x17 -> :sswitch_17
         0x5f4e5446 -> :sswitch_0
     .end sparse-switch
 .end method

@@ -3081,21 +3081,6 @@
     return-void
 .end method
 
-.method static synthetic access$400(Lcom/android/server/ConnectivityService;Lcom/android/server/ConnectivityService$FeatureUser;Z)I
-    .locals 1
-    .param p0, "x0"    # Lcom/android/server/ConnectivityService;
-    .param p1, "x1"    # Lcom/android/server/ConnectivityService$FeatureUser;
-    .param p2, "x2"    # Z
-
-    .prologue
-    .line 173
-    invoke-direct {p0, p1, p2}, Lcom/android/server/ConnectivityService;->stopUsingNetworkFeature(Lcom/android/server/ConnectivityService$FeatureUser;Z)I
-
-    move-result v0
-
-    return v0
-.end method
-
 .method static synthetic access$4000(Lcom/android/server/ConnectivityService;)Landroid/os/INetworkManagementService;
     .locals 1
     .param p0, "x0"    # Lcom/android/server/ConnectivityService;

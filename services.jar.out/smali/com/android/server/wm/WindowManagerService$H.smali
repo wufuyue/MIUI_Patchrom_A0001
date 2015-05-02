@@ -974,12 +974,6 @@
     :catchall_3
     move-exception v2
 
-    move-object/from16 v0, v35
-
-    iget-object v2, v0, Lcom/android/server/wm/AppWindowToken;->startingData:Lcom/android/server/wm/StartingData;
-
-    if-nez v2, :cond_9
-
     monitor-exit v3
     :try_end_8
     .catchall {:try_start_8 .. :try_end_8} :catchall_3
@@ -1357,6 +1351,12 @@
     move-object/from16 v0, v35
 
     iget-object v2, v0, Lcom/android/server/wm/AppWindowToken;->startingWindow:Lcom/android/server/wm/WindowState;
+
+    if-nez v2, :cond_14
+
+    move-object/from16 v0, v35
+
+    iget-object v2, v0, Lcom/android/server/wm/AppWindowToken;->startingData:Lcom/android/server/wm/StartingData;
 
     if-nez v2, :cond_14
 
