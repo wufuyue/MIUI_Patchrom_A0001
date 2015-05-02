@@ -9663,7 +9663,7 @@
 
     move-result v1
 
-    if-eqz v1, :cond_4
+    if-eqz v1, :cond_5
 
     iget-object v13, p0, Lcom/android/server/LocationManagerService;->mLock:Ljava/lang/Object;
 
@@ -9705,6 +9705,7 @@
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
     .line 1496
+    :cond_5
     invoke-static {v10, v11}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
     .line 1498

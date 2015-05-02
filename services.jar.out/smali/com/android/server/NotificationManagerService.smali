@@ -3852,7 +3852,7 @@
 .end method
 
 .method private updateLightsLocked()V
-    .locals 10
+    .locals 11
     .annotation build Landroid/annotation/OppoHook;
         level = .enum Landroid/annotation/OppoHook$OppoHookType;->CHANGE_CODE:Landroid/annotation/OppoHook$OppoHookType;
         note = "Liruijie@Plf.Keyguard,2013.02.04:add for general color of notification light"
@@ -3896,7 +3896,21 @@
 
     iget-boolean v8, p0, Lcom/android/server/NotificationManagerService;->mScreenOn:Z
 
-    if-eqz v8, :cond_3
+    if-nez v8, :cond_1
+
+    iget-object v8, p0, Lcom/android/server/NotificationManagerService;->mContext:Landroid/content/Context;
+
+    iget-object v9, p0, Lcom/android/server/NotificationManagerService;->mLedNotification:Lcom/android/server/NotificationManagerService$NotificationRecord;
+
+    iget-object v9, v9, Lcom/android/server/NotificationManagerService$NotificationRecord;->sbn:Landroid/service/notification/StatusBarNotification;
+
+    const-string v10, "_led"
+
+    invoke-static {v8, v9, v10}, Lmiui/util/NotificationFilterHelper;->isAllowed(Landroid/content/Context;Landroid/service/notification/StatusBarNotification;Ljava/lang/String;)Z
+
+    move-result v8
+
+    if-nez v8, :cond_3
 
     .line 2325
     :cond_1
@@ -3982,17 +3996,17 @@
 
     if-eqz v8, :cond_5
 
-    iget-object v5, p0, Lcom/android/server/NotificationManagerService;->mContext:Landroid/content/Context;
+    iget-object v8, p0, Lcom/android/server/NotificationManagerService;->mContext:Landroid/content/Context;
 
-    iget v6, p0, Lcom/android/server/NotificationManagerService;->mDefaultNotificationColor:I
+    iget v9, p0, Lcom/android/server/NotificationManagerService;->mDefaultNotificationColor:I
 
-    invoke-static {v5, v3, v6}, Lcom/android/server/NotificationLightController;->updateNotificationLight(Landroid/content/Context;Landroid/app/Notification;I)V
+    invoke-static {v8, v5, v9}, Lcom/android/server/NotificationLightController;->updateNotificationLight(Landroid/content/Context;Landroid/app/Notification;I)V
 
-    iget v0, v3, Landroid/app/Notification;->ledARGB:I
+    iget v2, v5, Landroid/app/Notification;->ledARGB:I
 
-    iget v2, v3, Landroid/app/Notification;->ledOnMS:I
+    iget v4, v5, Landroid/app/Notification;->ledOnMS:I
 
-    iget v1, v3, Landroid/app/Notification;->ledOffMS:I
+    iget v3, v5, Landroid/app/Notification;->ledOffMS:I
 
     .line 2353
     :cond_4

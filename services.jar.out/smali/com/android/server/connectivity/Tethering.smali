@@ -1002,11 +1002,6 @@
 
     .line 1792
     :goto_2
-    const/high16 v1, 0x40000000    # 2.0f
-
-    invoke-virtual {v3, v1}, Landroid/content/Intent;->setFlags(I)Landroid/content/Intent;
-
-    .line 1794
     move-object/from16 v0, p0
 
     iget-object v1, v0, Lcom/android/server/connectivity/Tethering;->mContext:Landroid/content/Context;

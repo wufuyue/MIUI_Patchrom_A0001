@@ -59,6 +59,17 @@
     return-void
 .end method
 
+.method constructor <init>(Lcom/android/server/LightsService;II)V
+    .locals 0
+    .param p2, "id"    # I
+    .param p3, "unused"    # I
+
+    .prologue
+    invoke-direct {p0, p1, p2}, Lcom/android/server/LightsService$Light;-><init>(Lcom/android/server/LightsService;I)V
+
+    return-void
+.end method
+
 .method static synthetic access$300(Lcom/android/server/LightsService$Light;)I
     .locals 1
     .param p0, "x0"    # Lcom/android/server/LightsService$Light;

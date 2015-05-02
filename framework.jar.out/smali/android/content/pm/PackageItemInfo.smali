@@ -404,11 +404,6 @@
     .end annotation
 
     .prologue
-    .line 305
-    iget v1, p0, Landroid/content/pm/PackageItemInfo;->icon:I
-
-    if-eqz v1, :cond_3
-
     .line 306
     const/4 v0, 0x0
 
@@ -427,7 +422,7 @@
 
     iget-object v4, p0, Landroid/content/pm/PackageItemInfo;->name:Ljava/lang/String;
 
-    invoke-static {p1, v1, v2, v3, v4}, Landroid/app/OppoThemeHelper;->getDrawable(Landroid/content/pm/PackageManager;Ljava/lang/String;ILandroid/content/pm/ApplicationInfo;Ljava/lang/String;)Landroid/graphics/drawable/Drawable;
+    invoke-static {p1, v1, v4, v2, v3}, Landroid/app/MiuiThemeHelper;->getDrawable(Landroid/content/pm/PackageManager;Ljava/lang/String;Ljava/lang/String;ILandroid/content/pm/ApplicationInfo;)Landroid/graphics/drawable/Drawable;
 
     move-result-object v0
 
@@ -441,13 +436,15 @@
     :cond_1
     iget-object v1, p0, Landroid/content/pm/PackageItemInfo;->packageName:Ljava/lang/String;
 
+    iget-object v4, p0, Landroid/content/pm/PackageItemInfo;->name:Ljava/lang/String;
+
     iget v2, p0, Landroid/content/pm/PackageItemInfo;->icon:I
 
     invoke-virtual {p0}, Landroid/content/pm/PackageItemInfo;->getApplicationInfo()Landroid/content/pm/ApplicationInfo;
 
     move-result-object v3
 
-    invoke-virtual {p1, v1, v2, v3}, Landroid/content/pm/PackageManager;->getDrawable(Ljava/lang/String;ILandroid/content/pm/ApplicationInfo;)Landroid/graphics/drawable/Drawable;
+    invoke-static {p1, v1, v4, v2, v3}, Landroid/app/MiuiThemeHelper;->getDrawable(Landroid/content/pm/PackageManager;Ljava/lang/String;Ljava/lang/String;ILandroid/content/pm/ApplicationInfo;)Landroid/graphics/drawable/Drawable;
 
     move-result-object v0
 

@@ -146,17 +146,6 @@
     .param p2, "wn"    # Landroid/net/wifi/WifiNative;
 
     .prologue
-    iget-object v3, p0, Landroid/net/wifi/WifiConfigStore;->mWifiAutoConnController:Landroid/net/wifi/WifiAutoConnController;
-
-    invoke-virtual {v3}, Landroid/net/wifi/WifiAutoConnController;->shouldEnableAllNetworks()Z
-
-    move-result v3
-
-    if-nez v3, :cond_miui_0
-
-    return-void
-
-    :cond_miui_0
     const/4 v2, 0x0
 
     .line 184
@@ -267,6 +256,24 @@
     iput-object v2, p0, Landroid/net/wifi/WifiConfigStore;->mFileObserver:Landroid/net/wifi/WifiConfigStore$WpaConfigFileObserver;
 
     goto :goto_0
+.end method
+
+.method constructor <init>(Landroid/content/Context;Landroid/net/wifi/WifiNative;Landroid/os/Handler;)V
+    .locals 1
+    .param p1, "c"    # Landroid/content/Context;
+    .param p2, "wn"    # Landroid/net/wifi/WifiNative;
+    .param p3, "handler"    # Landroid/os/Handler;
+
+    .prologue
+    invoke-direct {p0, p1, p2}, Landroid/net/wifi/WifiConfigStore;-><init>(Landroid/content/Context;Landroid/net/wifi/WifiNative;)V
+
+    new-instance v0, Landroid/net/wifi/WifiAutoConnController;
+
+    invoke-direct {v0, p0, p1, p3}, Landroid/net/wifi/WifiAutoConnController;-><init>(Landroid/net/wifi/WifiConfigStore;Landroid/content/Context;Landroid/os/Handler;)V
+
+    iput-object v0, p0, Landroid/net/wifi/WifiConfigStore;->mWifiAutoConnController:Landroid/net/wifi/WifiAutoConnController;
+
+    return-void
 .end method
 
 .method static synthetic access$000()Z
@@ -3508,6 +3515,7 @@
     move-result-object v1
 
     .local v1, "i$":Ljava/util/Iterator;
+    :cond_0
     :goto_0
     invoke-interface {v1}, Ljava/util/Iterator;->hasNext()Z
 
@@ -7024,16 +7032,6 @@
 
     if-eq v3, v5, :cond_1
 
-    iget-object v3, p0, Landroid/net/wifi/WifiConfigStore;->mWifiAutoConnController:Landroid/net/wifi/WifiAutoConnController;
-
-    iget-object v4, v0, Landroid/net/wifi/WifiConfiguration;->SSID:Ljava/lang/String;
-
-    invoke-virtual {v3, v4}, Landroid/net/wifi/WifiAutoConnController;->isDisableByUser(Ljava/lang/String;)Z
-
-    move-result v3
-
-    if-nez v3, :cond_0
-
     .line 507
     iget-object v3, p0, Landroid/net/wifi/WifiConfigStore;->mWifiNative:Landroid/net/wifi/WifiNative;
 
@@ -7285,6 +7283,17 @@
 
     .prologue
     .line 258
+    iget-object v3, p0, Landroid/net/wifi/WifiConfigStore;->mWifiAutoConnController:Landroid/net/wifi/WifiAutoConnController;
+
+    invoke-virtual {v3}, Landroid/net/wifi/WifiAutoConnController;->shouldEnableAllNetworks()Z
+
+    move-result v3
+
+    if-nez v3, :cond_miui_0
+
+    return-void
+
+    :cond_miui_0
     iget-object v3, p0, Landroid/net/wifi/WifiConfigStore;->mContext:Landroid/content/Context;
 
     invoke-virtual {v3}, Landroid/content/Context;->getPackageManager()Landroid/content/pm/PackageManager;
@@ -7324,7 +7333,6 @@
     move-result-object v1
 
     .local v1, "i$":Ljava/util/Iterator;
-    :cond_2
     :goto_1
     invoke-interface {v1}, Ljava/util/Iterator;->hasNext()Z
 
@@ -7349,6 +7357,16 @@
     if-ne v3, v4, :cond_2
 
     .line 267
+    iget-object v3, p0, Landroid/net/wifi/WifiConfigStore;->mWifiAutoConnController:Landroid/net/wifi/WifiAutoConnController;
+
+    iget-object v4, v0, Landroid/net/wifi/WifiConfiguration;->SSID:Ljava/lang/String;
+
+    invoke-virtual {v3, v4}, Landroid/net/wifi/WifiAutoConnController;->isDisableByUser(Ljava/lang/String;)Z
+
+    move-result v3
+
+    if-nez v3, :cond_2
+
     iget-object v3, p0, Landroid/net/wifi/WifiConfigStore;->mWifiNative:Landroid/net/wifi/WifiNative;
 
     iget v4, v0, Landroid/net/wifi/WifiConfiguration;->networkId:I
@@ -7394,6 +7412,13 @@
     move-result-object v3
 
     invoke-direct {p0, v3}, Landroid/net/wifi/WifiConfigStore;->loge(Ljava/lang/String;)V
+
+    goto :goto_1
+
+    :cond_2
+    iget-object v3, p0, Landroid/net/wifi/WifiConfigStore;->mWifiAutoConnController:Landroid/net/wifi/WifiAutoConnController;
+
+    invoke-virtual {v3, v0}, Landroid/net/wifi/WifiAutoConnController;->disableNetwork(Landroid/net/wifi/WifiConfiguration;)V
 
     goto :goto_1
 
@@ -7675,13 +7700,6 @@
     move-result-object v4
 
     invoke-direct {p0, v4}, Landroid/net/wifi/WifiConfigStore;->loge(Ljava/lang/String;)V
-
-    goto :goto_0
-
-    :cond_0
-    iget-object v3, p0, Landroid/net/wifi/WifiConfigStore;->mWifiAutoConnController:Landroid/net/wifi/WifiAutoConnController;
-
-    invoke-virtual {v3, v0}, Landroid/net/wifi/WifiAutoConnController;->disableNetwork(Landroid/net/wifi/WifiConfiguration;)V
 
     goto :goto_0
 
@@ -8943,6 +8961,10 @@
     const-string/jumbo v4, "selectNetwork"
 
     invoke-direct {p0, v4, p1}, Landroid/net/wifi/WifiConfigStore;->localLog(Ljava/lang/String;I)V
+
+    iget-object v4, p0, Landroid/net/wifi/WifiConfigStore;->mWifiAutoConnController:Landroid/net/wifi/WifiAutoConnController;
+
+    invoke-virtual {v4, p1}, Landroid/net/wifi/WifiAutoConnController;->selectNetwork(I)V
 
     .line 297
     :cond_0

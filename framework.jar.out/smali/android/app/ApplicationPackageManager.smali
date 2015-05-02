@@ -3054,6 +3054,10 @@
 
     .line 802
     .local v6, "r":Landroid/content/res/Resources;
+    iget-object v0, p1, Landroid/content/pm/ApplicationInfo;->packageName:Ljava/lang/String;
+
+    invoke-static {v6, v0}, Landroid/miui/ResourcesManager;->initMiuiResource(Landroid/content/res/Resources;Ljava/lang/String;)V
+
     if-nez v6, :cond_0
 
     .line 805

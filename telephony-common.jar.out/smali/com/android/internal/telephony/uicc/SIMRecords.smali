@@ -1078,6 +1078,14 @@
     iput-object v5, p0, Lcom/android/internal/telephony/uicc/SIMRecords;->oppoMsisdnTag:Ljava/lang/String;
 
     .line 286
+    new-instance v1, Lcom/android/internal/telephony/uicc/MiuiAdnRecordCache;
+
+    iget-object v4, p0, Lcom/android/internal/telephony/uicc/SIMRecords;->mFh:Lcom/android/internal/telephony/uicc/IccFileHandler;
+
+    invoke-direct {v1, v4}, Lcom/android/internal/telephony/uicc/MiuiAdnRecordCache;-><init>(Lcom/android/internal/telephony/uicc/IccFileHandler;)V
+
+    iput-object v1, p0, Lcom/android/internal/telephony/uicc/SIMRecords;->mMiuiAdnCache:Lcom/android/internal/telephony/uicc/MiuiAdnRecordCache;
+
     new-instance v1, Lcom/android/internal/telephony/uicc/AdnRecordCache;
 
     iget-object v4, p0, Lcom/android/internal/telephony/uicc/SIMRecords;->mFh:Lcom/android/internal/telephony/uicc/IccFileHandler;

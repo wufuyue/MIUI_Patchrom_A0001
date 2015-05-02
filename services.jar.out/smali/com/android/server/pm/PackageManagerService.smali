@@ -1902,7 +1902,7 @@
 
     invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
 
-    invoke-virtual/range {v23 .. v23}, Ljava/io/File;->getPath()Ljava/lang/String;
+    invoke-virtual/range {v24 .. v24}, Ljava/io/File;->getPath()Ljava/lang/String;
 
     move-result-object v3
 
@@ -3099,7 +3099,7 @@
 
     invoke-interface/range {v39 .. v39}, Ljava/util/Iterator;->remove()V
 
-    invoke-static/range {v35 .. v35}, Lcom/android/server/pm/PackageManagerServiceInjector;->removePackageFromSharedUser(Lcom/android/server/pm/PackageSetting;)V
+    invoke-static/range {v38 .. v38}, Lcom/android/server/pm/PackageManagerServiceInjector;->removePackageFromSharedUser(Lcom/android/server/pm/PackageSetting;)V
 
     new-instance v2, Ljava/lang/StringBuilder;
 
@@ -12064,6 +12064,14 @@
 
     .line 5891
     :cond_1
+    iget-object v4, p2, Landroid/content/pm/PackageParser$Package;->mSignatures:[Landroid/content/pm/Signature;
+
+    invoke-static {v4}, Lmiui/content/pm/ExtraPackageManager;->isTrustedSystemSignature([Landroid/content/pm/Signature;)Z
+
+    move-result v4
+
+    or-int/2addr v0, v4
+
     if-nez v0, :cond_2
 
     iget v4, p3, Lcom/android/server/pm/BasePermission;->protectionLevel:I

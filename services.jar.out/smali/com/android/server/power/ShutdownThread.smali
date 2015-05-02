@@ -165,6 +165,10 @@
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
     .line 280
+    sget-boolean v2, Lcom/android/server/power/ShutdownThread;->mReboot:Z
+
+    invoke-static {p0, v2}, Lcom/android/server/power/MiuiShutdownThread;->showShutdownDialog(Landroid/content/Context;Z)V
+
     sget-object v3, Lcom/android/server/power/ShutdownThread;->sInstance:Lcom/android/server/power/ShutdownThread;
 
     iput-object p0, v3, Lcom/android/server/power/ShutdownThread;->mContext:Landroid/content/Context;

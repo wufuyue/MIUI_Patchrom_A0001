@@ -40,9 +40,6 @@
     .end annotation
 .end method
 
-.method public abstract reboot()V
-.end method
-
 .method public abstract rebootSafeMode(Z)V
 .end method
 

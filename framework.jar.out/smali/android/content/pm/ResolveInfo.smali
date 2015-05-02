@@ -951,6 +951,10 @@
 
     .line 208
     .local v2, "dr":Landroid/graphics/drawable/Drawable;
+    invoke-static {v2}, Lmiui/content/res/IconCustomizer;->generateIconStyleDrawable(Landroid/graphics/drawable/Drawable;)Landroid/graphics/drawable/BitmapDrawable;
+
+    move-result-object v2
+
     if-nez v2, :cond_0
 
     .line 209

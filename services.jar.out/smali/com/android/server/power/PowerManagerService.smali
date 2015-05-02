@@ -1998,6 +1998,8 @@
 
     .prologue
     .line 1295
+    invoke-direct {p0}, Lcom/android/server/power/PowerManagerService;->checkIfBootAnimationFinished()V
+
     sget-boolean v9, Lcom/android/server/power/PowerManagerService;->DEBUG_G:Z
 
     if-eqz v9, :cond_0
@@ -4940,6 +4942,12 @@
     .end local v3    # "screenBrightness":I
     :cond_5
     :goto_6
+    invoke-direct {p0}, Lcom/android/server/power/PowerManagerService;->getDesiredScreenPowerStateLocked()I
+
+    move-result v6
+
+    invoke-static {v6}, Lcom/android/server/power/ButtonLightController;->turnOffButtonLight(I)V
+
     return-void
 
     .restart local v1    # "newScreenState":I
@@ -6659,6 +6667,8 @@
     const/4 v0, 0x1
 
     const/4 v1, 0x0
+
+    invoke-static {}, Lcom/android/server/power/ButtonLightController;->setButtonLightTimeout()V
 
     .line 1157
     sget-boolean v2, Lcom/android/server/power/PowerManagerService;->DEBUG_G:Z

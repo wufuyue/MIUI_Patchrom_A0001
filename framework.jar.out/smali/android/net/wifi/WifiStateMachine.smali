@@ -1303,7 +1303,11 @@
 
     move-object/from16 v0, p1
 
-    invoke-direct {v10, v0, v11}, Landroid/net/wifi/WifiConfigStore;-><init>(Landroid/content/Context;Landroid/net/wifi/WifiNative;)V
+    invoke-virtual {p0}, Landroid/net/wifi/WifiStateMachine;->getHandler()Landroid/os/Handler;
+
+    move-result-object v12
+
+    invoke-direct {v10, v0, v11, v12}, Landroid/net/wifi/WifiConfigStore;-><init>(Landroid/content/Context;Landroid/net/wifi/WifiNative;Landroid/os/Handler;)V
 
     iput-object v10, p0, Landroid/net/wifi/WifiStateMachine;->mWifiConfigStore:Landroid/net/wifi/WifiConfigStore;
 
@@ -9237,6 +9241,10 @@
     invoke-virtual {v2, v7}, Landroid/net/wifi/WifiInfo;->setMeteredHint(Z)V
 
     .line 2708
+    iget-object v2, p0, Landroid/net/wifi/WifiStateMachine;->mWifiInfo:Landroid/net/wifi/WifiInfo;
+
+    invoke-virtual {v2, v5}, Landroid/net/wifi/WifiInfo;->setVendorInfo(Ljava/lang/String;)V
+
     sget-object v2, Landroid/net/NetworkInfo$DetailedState;->DISCONNECTED:Landroid/net/NetworkInfo$DetailedState;
 
     invoke-direct {p0, v2}, Landroid/net/wifi/WifiStateMachine;->setNetworkDetailedState(Landroid/net/NetworkInfo$DetailedState;)V
@@ -9598,11 +9606,11 @@
 
     invoke-virtual {v4, v5}, Landroid/net/wifi/WifiInfo;->setMeteredHint(Z)V
 
-    iget-object v3, p0, Landroid/net/wifi/WifiStateMachine;->mWifiInfo:Landroid/net/wifi/WifiInfo;
+    iget-object v4, p0, Landroid/net/wifi/WifiStateMachine;->mWifiInfo:Landroid/net/wifi/WifiInfo;
 
-    iget-object v4, p1, Landroid/net/DhcpResults;->vendorInfo:Ljava/lang/String;
+    iget-object v5, p1, Landroid/net/DhcpResults;->vendorInfo:Ljava/lang/String;
 
-    invoke-virtual {v3, v4}, Landroid/net/wifi/WifiInfo;->setVendorInfo(Ljava/lang/String;)V
+    invoke-virtual {v4, v5}, Landroid/net/wifi/WifiInfo;->setVendorInfo(Ljava/lang/String;)V
 
     .line 2832
     invoke-direct {p0}, Landroid/net/wifi/WifiStateMachine;->updateLinkProperties()V
@@ -13045,7 +13053,7 @@
 
     move-result v27
 
-    if-eqz v27, :cond_7
+    if-eqz v27, :cond_miui_1
 
     .line 2257
     :cond_e
@@ -13134,6 +13142,14 @@
 
     .line 2280
     :goto_8
+    move/from16 v0, v30
+
+    iput-boolean v0, v2, Landroid/net/wifi/ScanResult;->isWpsConfigured:Z
+
+    move/from16 v0, v31
+
+    iput-boolean v0, v2, Landroid/net/wifi/ScanResult;->isXiaomiRouter:Z
+
     invoke-virtual/range {p0 .. p0}, Landroid/net/wifi/WifiStateMachine;->getFrequencyBand()I
 
     move-result v27
@@ -13242,8 +13258,116 @@
     .restart local v20    # "line":Ljava/lang/String;
     .restart local v21    # "lines":[Ljava/lang/String;
     .restart local v25    # "ssid":Ljava/lang/String;
-    :cond_13
+    :cond_miui_1
     :try_start_8
+    const-string v34, "wps_state="
+
+    move-object/from16 v0, v20
+
+    move-object/from16 v1, v34
+
+    invoke-virtual {v0, v1}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
+
+    move-result v34
+
+    if-eqz v34, :cond_miui_0
+
+    new-instance v35, Ljava/lang/String;
+
+    invoke-virtual/range {v20 .. v20}, Ljava/lang/String;->getBytes()[B
+
+    move-result-object v34
+
+    invoke-virtual/range {v20 .. v20}, Ljava/lang/String;->length()I
+
+    move-result v36
+
+    sub-int v36, v36, v32
+
+    move-object/from16 v0, v35
+
+    move-object/from16 v1, v34
+
+    move-object/from16 v37, v3
+    
+    move/from16 v2, v32
+
+    move/from16 v3, v36
+
+    invoke-direct {v0, v1, v2, v3}, Ljava/lang/String;-><init>([BII)V
+
+    .local v35, "wpsStateStr":Ljava/lang/String;
+
+    move-object/from16 v3, v37
+
+    const-string v34, "configured"
+
+    move-object/from16 v0, v34
+
+    move-object/from16 v1, v35
+
+    invoke-virtual {v0, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v30
+
+    goto/16 :goto_5
+
+    .end local v35    # "wpsStateStr":Ljava/lang/String;
+    :cond_miui_0
+    const-string v34, "wps_device_name="
+
+    move-object/from16 v0, v20
+
+    move-object/from16 v1, v34
+
+    invoke-virtual {v0, v1}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
+
+    move-result v34
+
+    if-eqz v34, :cond_7
+
+    new-instance v35, Ljava/lang/String;
+
+    invoke-virtual/range {v20 .. v20}, Ljava/lang/String;->getBytes()[B
+
+    move-result-object v34
+
+    invoke-virtual/range {v20 .. v20}, Ljava/lang/String;->length()I
+
+    move-result v36
+
+    sub-int v36, v36, v33
+
+    move-object/from16 v0, v35
+
+    move-object/from16 v1, v34
+
+    move-object/from16 v37, v3
+
+    move/from16 v2, v33
+
+    move/from16 v3, v36
+
+    invoke-direct {v0, v1, v2, v3}, Ljava/lang/String;-><init>([BII)V
+
+    .local v35, "wpsDeviceNameStr":Ljava/lang/String;
+
+    move-object/from16 v3, v37
+
+    const-string v34, "XiaoMiRouter"
+
+    move-object/from16 v0, v34
+
+    move-object/from16 v1, v35
+
+    invoke-virtual {v0, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v31
+
+    goto/16 :goto_5
+
+    .end local v35    # "wpsDeviceNameStr":Ljava/lang/String;
+    :cond_13
     invoke-virtual/range {p0 .. p0}, Landroid/net/wifi/WifiStateMachine;->getFrequencyBand()I
 
     move-result v27

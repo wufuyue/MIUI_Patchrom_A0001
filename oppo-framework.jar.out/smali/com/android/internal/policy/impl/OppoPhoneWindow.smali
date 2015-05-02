@@ -101,6 +101,8 @@
     invoke-virtual {p0}, Landroid/content/Context;->isOppoStyle()Z
 
     move-result v0
+    
+    const/4 v0, 0x0
 
     if-eqz v0, :cond_0
 
@@ -114,9 +116,9 @@
     return-object v0
 
     :cond_0
-    new-instance v0, Lcom/android/internal/policy/impl/PhoneWindow;
+    new-instance v0, Lcom/android/internal/policy/impl/MiuiPhoneWindow;
 
-    invoke-direct {v0, p0}, Lcom/android/internal/policy/impl/PhoneWindow;-><init>(Landroid/content/Context;)V
+    invoke-direct {v0, p0}, Lcom/android/internal/policy/impl/MiuiPhoneWindow;-><init>(Landroid/content/Context;)V
 
     goto :goto_0
 .end method

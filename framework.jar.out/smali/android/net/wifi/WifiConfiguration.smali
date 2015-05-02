@@ -127,14 +127,6 @@
 
 .field public wapiASCert:Ljava/lang/String;
 
-.field public wapiPsk:Ljava/lang/String;
-
-.field public wapiPskType:I
-
-.field public wapiUserCert:Ljava/lang/String;
-
-.field public wapiASCert:Ljava/lang/String;
-
 .field public wapiCertIndex:I
 
 .field public wapiPsk:Ljava/lang/String;
@@ -1869,22 +1861,6 @@
     iget-object v4, p0, Landroid/net/wifi/WifiConfiguration;->preSharedKey:Ljava/lang/String;
 
     invoke-virtual {p1, v4}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
-
-    iget-object v4, p0, Landroid/net/wifi/WifiConfiguration;->wapiASCert:Ljava/lang/String;
-
-    invoke-virtual {p1, v4}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
-
-    iget-object v4, p0, Landroid/net/wifi/WifiConfiguration;->wapiUserCert:Ljava/lang/String;
-
-    invoke-virtual {p1, v4}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
-
-    iget-object v4, p0, Landroid/net/wifi/WifiConfiguration;->wapiPsk:Ljava/lang/String;
-
-    invoke-virtual {p1, v4}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
-
-    iget v4, p0, Landroid/net/wifi/WifiConfiguration;->wapiPskType:I
-
-    invoke-virtual {p1, v4}, Landroid/os/Parcel;->writeInt(I)V
 
     iget-object v4, p0, Landroid/net/wifi/WifiConfiguration;->wapiASCert:Ljava/lang/String;
 

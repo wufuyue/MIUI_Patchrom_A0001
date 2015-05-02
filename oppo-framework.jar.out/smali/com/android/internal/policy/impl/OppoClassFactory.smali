@@ -19,9 +19,9 @@
 
     .prologue
     .line 24
-    new-instance v0, Lcom/android/internal/policy/impl/OppoPhoneWindowManager;
+    new-instance v0, Lcom/android/internal/policy/impl/MiuiPhoneWindowManager;
 
-    invoke-direct {v0}, Lcom/android/internal/policy/impl/OppoPhoneWindowManager;-><init>()V
+    invoke-direct {v0}, Lcom/android/internal/policy/impl/MiuiPhoneWindowManager;-><init>()V
 
     return-object v0
 .end method

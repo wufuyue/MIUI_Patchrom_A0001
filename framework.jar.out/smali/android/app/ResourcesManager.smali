@@ -244,7 +244,7 @@
 
     .line 272
     :cond_3
-    invoke-static {v0, p1}, Landroid/app/OppoThemeHelper;->handleExtraConfigurationChanges(ILandroid/content/res/Configuration;)V
+    invoke-static {v0, p1}, Landroid/app/MiuiThemeHelper;->handleExtraConfigurationChanges(ILandroid/content/res/Configuration;)V
 
     .line 276
     iget-object v10, p1, Landroid/content/res/Configuration;->locale:Ljava/util/Locale;

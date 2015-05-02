@@ -920,11 +920,6 @@
 
 .method static clearPreloadedCache()V
     .locals 2
-    .annotation build Landroid/annotation/OppoHook;
-        level = .enum Landroid/annotation/OppoHook$OppoHookType;->NEW_METHOD:Landroid/annotation/OppoHook$OppoHookType;
-        note = "Yaojun.Luo@Plf.SDK : Add for rom theme"
-        property = .enum Landroid/annotation/OppoHook$OppoRomType;->ROM:Landroid/annotation/OppoHook$OppoRomType;
-    .end annotation
 
     .prologue
     .line 2649
@@ -937,6 +932,14 @@
     invoke-virtual {v0}, Landroid/util/LongSparseArray;->clear()V
 
     .line 2650
+    sget-object v0, Landroid/content/res/Resources;->sPreloadedDrawables:[Landroid/util/LongSparseArray;
+
+    const/4 v1, 0x1
+
+    aget-object v0, v0, v1
+
+    invoke-virtual {v0}, Landroid/util/LongSparseArray;->clear()V
+
     sget-object v0, Landroid/content/res/Resources;->sPreloadedColorStateLists:Landroid/util/LongSparseArray;
 
     invoke-virtual {v0}, Landroid/util/LongSparseArray;->clear()V
@@ -948,6 +951,32 @@
 
     .line 2652
     return-void
+.end method
+
+.method private static createFromResourceStream(Landroid/content/res/Resources;Landroid/util/TypedValue;Ljava/io/InputStream;Ljava/lang/String;I)Landroid/graphics/drawable/Drawable;
+    .locals 2
+    .param p0, "res"    # Landroid/content/res/Resources;
+    .param p1, "value"    # Landroid/util/TypedValue;
+    .param p2, "is"    # Ljava/io/InputStream;
+    .param p3, "srcName"    # Ljava/lang/String;
+    .param p4, "id"    # I
+
+    .prologue
+    invoke-virtual {p0, p1, p4}, Landroid/content/res/Resources;->loadOverlayDrawable(Landroid/util/TypedValue;I)Landroid/graphics/drawable/Drawable;
+
+    move-result-object v0
+
+    .local v0, "dr":Landroid/graphics/drawable/Drawable;
+    if-nez v0, :cond_0
+
+    const/4 v1, 0x0
+
+    invoke-static {p0, p1, p2, p3, v1}, Landroid/graphics/drawable/Drawable;->createFromResourceStream(Landroid/content/res/Resources;Landroid/util/TypedValue;Ljava/io/InputStream;Ljava/lang/String;Landroid/graphics/BitmapFactory$Options;)Landroid/graphics/drawable/Drawable;
+
+    move-result-object v0
+
+    :cond_0
+    return-object v0
 .end method
 
 .method private getCachedColorStateList(J)Landroid/content/res/ColorStateList;
@@ -1189,7 +1218,7 @@
     .restart local v0    # "attrs":Landroid/content/res/TypedArray;
     :cond_1
     :try_start_1
-    new-instance v0, Landroid/content/res/TypedArray;
+    new-instance v0, Landroid/content/res/MiuiTypedArray;
 
     .end local v0    # "attrs":Landroid/content/res/TypedArray;
     mul-int/lit8 v2, p1, 0x6
@@ -1200,7 +1229,7 @@
 
     new-array v4, v4, [I
 
-    invoke-direct {v0, p0, v2, v4, p1}, Landroid/content/res/TypedArray;-><init>(Landroid/content/res/Resources;[I[II)V
+    invoke-direct {v0, p0, v2, v4, p1}, Landroid/content/res/MiuiTypedArray;-><init>(Landroid/content/res/Resources;[I[II)V
 
     monitor-exit v3
     :try_end_1
@@ -1360,6 +1389,10 @@
     sput-object v0, Landroid/content/res/Resources;->mSystem:Landroid/content/res/Resources;
 
     .line 263
+    const/4 v1, 0x0
+
+    invoke-static {v0, v1}, Landroid/miui/ResourcesManager;->initMiuiResource(Landroid/content/res/Resources;Ljava/lang/String;)V
+
     :cond_0
     monitor-exit v2
 
@@ -3388,6 +3421,43 @@
     goto :goto_0
 .end method
 
+.method getPreloadedDrawable(JI)Landroid/graphics/drawable/Drawable$ConstantState;
+    .locals 3
+    .param p1, "key"    # J
+    .param p3, "id"    # I
+
+    .prologue
+    sget-object v1, Landroid/content/res/Resources;->sPreloadedDrawables:[Landroid/util/LongSparseArray;
+
+    iget-object v2, p0, Landroid/content/res/Resources;->mConfiguration:Landroid/content/res/Configuration;
+
+    invoke-virtual {v2}, Landroid/content/res/Configuration;->getLayoutDirection()I
+
+    move-result v2
+
+    aget-object v1, v1, v2
+
+    invoke-virtual {v1, p1, p2}, Landroid/util/LongSparseArray;->get(J)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Landroid/graphics/drawable/Drawable$ConstantState;
+
+    .local v0, "cs":Landroid/graphics/drawable/Drawable$ConstantState;
+    if-eqz v0, :cond_0
+
+    invoke-virtual {p0, p3}, Landroid/content/res/Resources;->isPreloadOverlayed(I)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_0
+
+    const/4 v0, 0x0
+
+    :cond_0
+    return-object v0
+.end method
+
 .method public getPreloadedDrawables()Landroid/util/LongSparseArray;
     .locals 2
     .annotation system Ldalvik/annotation/Signature;
@@ -4515,6 +4585,25 @@
     goto :goto_1
 .end method
 
+.method isPreloadOverlayed(I)Z
+    .locals 1
+    .param p1, "id"    # I
+
+    .prologue
+    const/4 v0, 0x0
+
+    return v0
+.end method
+
+.method isPreloading()Z
+    .locals 1
+
+    .prologue
+    iget-boolean v0, p0, Landroid/content/res/Resources;->mPreloading:Z
+
+    return v0
+.end method
+
 .method loadColorStateList(Landroid/util/TypedValue;I)Landroid/content/res/ColorStateList;
     .locals 12
     .param p1, "value"    # Landroid/util/TypedValue;
@@ -4921,12 +5010,6 @@
     .locals 21
     .param p1, "value"    # Landroid/util/TypedValue;
     .param p2, "id"    # I
-    .annotation build Landroid/annotation/OppoHook;
-        level = .enum Landroid/annotation/OppoHook$OppoHookType;->CHANGE_CODE:Landroid/annotation/OppoHook$OppoHookType;
-        note = "Yaojun.Luo@Pl.SDK : Modify for rom theme"
-        property = .enum Landroid/annotation/OppoHook$OppoRomType;->ROM:Landroid/annotation/OppoHook$OppoRomType;
-    .end annotation
-
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/content/res/Resources$NotFoundException;
@@ -5180,27 +5263,13 @@
     .end local v7    # "dr":Landroid/graphics/drawable/Drawable;
     .restart local v6    # "dr":Landroid/graphics/drawable/Drawable;
     :cond_6
-    sget-object v17, Landroid/content/res/Resources;->sPreloadedDrawables:[Landroid/util/LongSparseArray;
-
     move-object/from16 v0, p0
 
-    iget-object v0, v0, Landroid/content/res/Resources;->mConfiguration:Landroid/content/res/Configuration;
+    move/from16 v1, p2
 
-    move-object/from16 v18, v0
-
-    invoke-virtual/range {v18 .. v18}, Landroid/content/res/Configuration;->getLayoutDirection()I
-
-    move-result v18
-
-    aget-object v17, v17, v18
-
-    move-object/from16 v0, v17
-
-    invoke-virtual {v0, v12, v13}, Landroid/util/LongSparseArray;->get(J)Ljava/lang/Object;
+    invoke-virtual {v0, v12, v13, v1}, Landroid/content/res/Resources;->getPreloadedDrawable(JI)Landroid/graphics/drawable/Drawable$ConstantState;
 
     move-result-object v5
-
-    check-cast v5, Landroid/graphics/drawable/Drawable$ConstantState;
 
     .restart local v5    # "cs":Landroid/graphics/drawable/Drawable$ConstantState;
     goto :goto_3
@@ -5445,15 +5514,13 @@
 
     .line 2258
     .local v10, "is":Ljava/io/InputStream;
-    const/16 v17, 0x0
-
     move-object/from16 v0, p0
 
     move-object/from16 v1, p1
 
-    move-object/from16 v2, v17
+    move/from16 v2, p2
 
-    invoke-static {v0, v1, v10, v9, v2}, Landroid/graphics/drawable/Drawable;->createFromResourceStream(Landroid/content/res/Resources;Landroid/util/TypedValue;Ljava/io/InputStream;Ljava/lang/String;Landroid/graphics/BitmapFactory$Options;)Landroid/graphics/drawable/Drawable;
+    invoke-static {v0, v1, v10, v9, v2}, Landroid/content/res/Resources;->createFromResourceStream(Landroid/content/res/Resources;Landroid/util/TypedValue;Ljava/io/InputStream;Ljava/lang/String;I)Landroid/graphics/drawable/Drawable;
 
     move-result-object v6
 
@@ -5965,191 +6032,23 @@
     return-object v0
 .end method
 
-.method public loadOverlayDrawable(Landroid/util/TypedValue;I)Landroid/graphics/drawable/Drawable;
-    .locals 8
+.method loadOverlayDrawable(Landroid/util/TypedValue;I)Landroid/graphics/drawable/Drawable;
+    .locals 1
     .param p1, "value"    # Landroid/util/TypedValue;
     .param p2, "id"    # I
-    .annotation build Landroid/annotation/OppoHook;
-        level = .enum Landroid/annotation/OppoHook$OppoHookType;->NEW_METHOD:Landroid/annotation/OppoHook$OppoHookType;
-        note = "Yaojun.Luo@Plf.SDK : Add for rom theme"
-        property = .enum Landroid/annotation/OppoHook$OppoRomType;->ROM:Landroid/annotation/OppoHook$OppoRomType;
-    .end annotation
 
     .prologue
-    .line 2693
-    iget-boolean v6, p0, Landroid/content/res/Resources;->mIsHasDrawables:Z
-
-    if-nez v6, :cond_1
-
     const/4 v0, 0x0
 
-    .line 2718
-    :cond_0
-    :goto_0
     return-object v0
+.end method
 
-    .line 2694
-    :cond_1
-    const/4 v0, 0x0
+.method loadOverlayTypedArray(Landroid/content/res/TypedArray;)Landroid/content/res/TypedArray;
+    .locals 0
+    .param p1, "array"    # Landroid/content/res/TypedArray;
 
-    .line 2695
-    .local v0, "drawable":Landroid/graphics/drawable/Drawable;
-    iget-object v6, p0, Landroid/content/res/Resources;->mSkipFiles:Landroid/util/SparseArray;
-
-    invoke-virtual {v6, p2}, Landroid/util/SparseArray;->get(I)Ljava/lang/Object;
-
-    move-result-object v6
-
-    if-nez v6, :cond_0
-
-    iget-object v6, p0, Landroid/content/res/Resources;->mThemeResources:Loppo/content/res/OppoThemeResources;
-
-    if-eqz v6, :cond_0
-
-    .line 2696
-    iget-object v6, p1, Landroid/util/TypedValue;->string:Ljava/lang/CharSequence;
-
-    invoke-virtual {v6}, Ljava/lang/Object;->toString()Ljava/lang/String;
-
-    move-result-object v4
-
-    .line 2697
-    .local v4, "path":Ljava/lang/String;
-    iget-object v6, p0, Landroid/content/res/Resources;->mThemeResources:Loppo/content/res/OppoThemeResources;
-
-    iget v7, p1, Landroid/util/TypedValue;->assetCookie:I
-
-    invoke-direct {p0, v7}, Landroid/content/res/Resources;->getCookieType(I)I
-
-    move-result v7
-
-    invoke-virtual {v6, v7, v4}, Loppo/content/res/OppoThemeResources;->getThemeFileStream(ILjava/lang/String;)Loppo/content/res/OppoThemeZipFile$ThemeFileInfo;
-
-    move-result-object v5
-
-    .line 2698
-    .local v5, "themeFileInfo":Loppo/content/res/OppoThemeZipFile$ThemeFileInfo;
-    if-nez v5, :cond_2
-
-    .line 2699
-    iget-object v6, p0, Landroid/content/res/Resources;->mSkipFiles:Landroid/util/SparseArray;
-
-    const/4 v7, 0x1
-
-    invoke-static {v7}, Ljava/lang/Boolean;->valueOf(Z)Ljava/lang/Boolean;
-
-    move-result-object v7
-
-    invoke-virtual {v6, p2, v7}, Landroid/util/SparseArray;->put(ILjava/lang/Object;)V
-
-    goto :goto_0
-
-    .line 2703
-    :cond_2
-    :try_start_0
-    new-instance v3, Landroid/graphics/BitmapFactory$Options;
-
-    invoke-direct {v3}, Landroid/graphics/BitmapFactory$Options;-><init>()V
-
-    .line 2704
-    .local v3, "options":Landroid/graphics/BitmapFactory$Options;
-    iget v6, v5, Loppo/content/res/OppoThemeZipFile$ThemeFileInfo;->mDensity:I
-
-    iput v6, v3, Landroid/graphics/BitmapFactory$Options;->inDensity:I
-
-    .line 2705
-    iget-object v1, v5, Loppo/content/res/OppoThemeZipFile$ThemeFileInfo;->mInput:Ljava/io/InputStream;
-
-    .line 2706
-    .local v1, "input":Ljava/io/InputStream;
-    invoke-static {p0, p1, v1, v4, v3}, Landroid/graphics/drawable/Drawable;->createFromResourceStream(Landroid/content/res/Resources;Landroid/util/TypedValue;Ljava/io/InputStream;Ljava/lang/String;Landroid/graphics/BitmapFactory$Options;)Landroid/graphics/drawable/Drawable;
-    :try_end_0
-    .catch Ljava/lang/OutOfMemoryError; {:try_start_0 .. :try_end_0} :catch_1
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
-
-    move-result-object v0
-
-    .line 2711
-    if-eqz v5, :cond_0
-
-    .line 2712
-    :try_start_1
-    iget-object v6, v5, Loppo/content/res/OppoThemeZipFile$ThemeFileInfo;->mInput:Ljava/io/InputStream;
-
-    invoke-virtual {v6}, Ljava/io/InputStream;->close()V
-    :try_end_1
-    .catch Ljava/lang/Exception; {:try_start_1 .. :try_end_1} :catch_0
-
-    goto :goto_0
-
-    .line 2714
-    :catch_0
-    move-exception v6
-
-    goto :goto_0
-
-    .line 2707
-    .end local v1    # "input":Ljava/io/InputStream;
-    .end local v3    # "options":Landroid/graphics/BitmapFactory$Options;
-    :catch_1
-    move-exception v2
-
-    .line 2708
-    .local v2, "localOutOfMemoryError":Ljava/lang/OutOfMemoryError;
-    :try_start_2
-    const-string v6, "Resources"
-
-    const-string/jumbo v7, "out of memory !!"
-
-    invoke-static {v6, v7}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
-    :try_end_2
-    .catchall {:try_start_2 .. :try_end_2} :catchall_0
-
-    .line 2711
-    if-eqz v5, :cond_0
-
-    .line 2712
-    :try_start_3
-    iget-object v6, v5, Loppo/content/res/OppoThemeZipFile$ThemeFileInfo;->mInput:Ljava/io/InputStream;
-
-    invoke-virtual {v6}, Ljava/io/InputStream;->close()V
-    :try_end_3
-    .catch Ljava/lang/Exception; {:try_start_3 .. :try_end_3} :catch_2
-
-    goto :goto_0
-
-    .line 2714
-    :catch_2
-    move-exception v6
-
-    goto :goto_0
-
-    .line 2710
-    .end local v2    # "localOutOfMemoryError":Ljava/lang/OutOfMemoryError;
-    :catchall_0
-    move-exception v6
-
-    .line 2711
-    if-eqz v5, :cond_3
-
-    .line 2712
-    :try_start_4
-    iget-object v7, v5, Loppo/content/res/OppoThemeZipFile$ThemeFileInfo;->mInput:Ljava/io/InputStream;
-
-    invoke-virtual {v7}, Ljava/io/InputStream;->close()V
-    :try_end_4
-    .catch Ljava/lang/Exception; {:try_start_4 .. :try_end_4} :catch_3
-
-    .line 2715
-    :cond_3
-    :goto_1
-    throw v6
-
-    .line 2714
-    :catch_3
-    move-exception v7
-
-    goto :goto_1
+    .prologue
+    return-object p1
 .end method
 
 .method loadXmlResourceParser(ILjava/lang/String;)Landroid/content/res/XmlResourceParser;
@@ -6563,11 +6462,6 @@
     .locals 7
     .param p1, "set"    # Landroid/util/AttributeSet;
     .param p2, "attrs"    # [I
-    .annotation build Landroid/annotation/OppoHook;
-        level = .enum Landroid/annotation/OppoHook$OppoHookType;->CHANGE_CODE:Landroid/annotation/OppoHook$OppoHookType;
-        note = "Yaojun.Luo@Plf.SDK : Modify for rom theme"
-        property = .enum Landroid/annotation/OppoHook$OppoRomType;->ROM:Landroid/annotation/OppoHook$OppoRomType;
-    .end annotation
 
     .prologue
     .line 1593
@@ -6604,11 +6498,11 @@
     iput-object v2, v0, Landroid/content/res/TypedArray;->mXml:Landroid/content/res/XmlBlock$Parser;
 
     .line 1613
-    invoke-direct {p0, v0}, Landroid/content/res/Resources;->replaceTypedArray(Landroid/content/res/TypedArray;)Landroid/content/res/TypedArray;
+    invoke-virtual {p0, v0}, Landroid/content/res/Resources;->loadOverlayTypedArray(Landroid/content/res/TypedArray;)Landroid/content/res/TypedArray;
 
-    move-result-object v3
+    move-result-object v0
 
-    return-object v3
+    return-object v0
 .end method
 
 .method public obtainTypedArray(I)Landroid/content/res/TypedArray;
@@ -6687,7 +6581,11 @@
     aput v4, v2, v4
 
     .line 563
-    return-object v0
+    invoke-virtual {p0, v0}, Landroid/content/res/Resources;->loadOverlayTypedArray(Landroid/content/res/TypedArray;)Landroid/content/res/TypedArray;
+
+    move-result-object v2
+
+    return-object v2
 .end method
 
 .method public openOppoThemeRawResource(ILandroid/util/TypedValue;)Ljava/io/InputStream;
@@ -7865,7 +7763,13 @@
     .line 1680
     invoke-static/range {v20 .. v20}, Landroid/content/pm/ActivityInfo;->activityInfoConfigToNative(I)I
 
-    move-result v20
+    move-result v2
+
+    const/high16 v3, -0x80000000
+
+    and-int v3, v3, v20
+
+    or-int v20, v2, v3
 
     .line 1682
     .end local v21    # "density":I
