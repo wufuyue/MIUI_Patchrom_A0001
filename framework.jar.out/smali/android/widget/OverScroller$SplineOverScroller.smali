@@ -63,10 +63,6 @@
 
 .field private mIsPerfLockAcquired:Z
 
-.field private mIsPerfBoostEnabled:Z
-
-.field private mIsPerfLockAcquired:Z
-
 .field private mOver:I
 
 .field private mPerf:Lorg/codeaurora/Performance;

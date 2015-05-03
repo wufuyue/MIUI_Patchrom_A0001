@@ -370,7 +370,7 @@
 
     move-result v4
 
-    if-nez v4, :cond_6
+    if-nez v4, :cond_8
 
     .line 1159
     new-instance v8, Lcom/android/server/am/AppErrorDialog;
