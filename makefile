@@ -50,3 +50,10 @@ local-pre-zip-misc:
 	cp -rf other/boot.img $(ZIP_DIR)/boot.img
 
 	cp -rf other/system $(ZIP_DIR)/
+	@echo use original binaries!
+	cp -rf stockrom/system/bin/app_process $(ZIP_DIR)/system/bin/app_process
+	rm -rf $(ZIP_DIR)/system/bin/debuggerd_vendor
+	cp -rf stockrom/system/bin/debuggerd $(ZIP_DIR)/system/bin/debuggerd
+	rm -rf $(ZIP_DIR)/system/bin/dexopt_vendor
+	cp -rf stockrom/system/bin/dexopt $(ZIP_DIR)/system/bin/dexopt
+
