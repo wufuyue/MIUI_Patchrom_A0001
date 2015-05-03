@@ -655,7 +655,7 @@
 
     move-result v3
 
-    if-eqz v3, :cond_1
+    if-eqz v3, :cond_0
 
     .line 1092
     const-string/jumbo v1, "oppo_default_wallpaper_mexico_exp"
@@ -692,13 +692,9 @@
 
     .line 1099
     .local v2, "wallpaperID":I
-    if-gtz v2, :cond_0
-
-    .line 1100
-    const v2, 0xc08003e
+    const v2, 0x1080220
 
     .line 1102
-    :cond_0
     invoke-virtual {p0, v2}, Landroid/app/WallpaperManager;->setResource(I)V
 
     .line 1106
@@ -706,14 +702,14 @@
 
     .line 1093
     .end local v2    # "wallpaperID":I
-    :cond_1
+    :cond_0
     const-string v3, "CN"
 
     invoke-virtual {v0, v3}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
 
     move-result v3
 
-    if-eqz v3, :cond_2
+    if-eqz v3, :cond_1
 
     .line 1094
     const-string/jumbo v1, "oppo_default_wallpaper"
@@ -721,7 +717,7 @@
     goto :goto_0
 
     .line 1096
-    :cond_2
+    :cond_1
     const-string/jumbo v1, "oppo_default_wallpaper_exp"
 
     goto :goto_0

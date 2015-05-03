@@ -59,7 +59,7 @@
     iput-object v0, p0, Lcom/android/server/WallpaperManagerService$WallpaperHelper;->MTK_PLATFORM_PROP:Ljava/lang/String;
 
     .line 115
-    const v0, 0xc08003e
+    const v0, 0x1080220
 
     iput v0, p0, Lcom/android/server/WallpaperManagerService$WallpaperHelper;->DEFAULT_WALLPAPER_RES_ID:I
 
@@ -721,7 +721,7 @@
 
     move-result v8
 
-    if-nez v8, :cond_2
+    if-nez v8, :cond_1
 
     .line 132
     .local v2, "isMtkPlatform":Z
@@ -756,7 +756,7 @@
 
     move-result v8
 
-    if-eqz v8, :cond_3
+    if-eqz v8, :cond_2
 
     .line 145
     const-string v5, "oppo_default_wallpaper_mexico_exp"
@@ -795,13 +795,9 @@
 
     .line 152
     .local v6, "wallpaperID":I
-    if-gtz v6, :cond_1
-
-    .line 153
-    const v6, 0xc08003e
+    const v6, 0x1080220
 
     .line 156
-    :cond_1
     invoke-static {v4, v6, v3}, Landroid/graphics/BitmapFactory;->decodeResource(Landroid/content/res/Resources;ILandroid/graphics/BitmapFactory$Options;)Landroid/graphics/Bitmap;
 
     .line 159
@@ -842,7 +838,7 @@
 
     .line 129
     .restart local v3    # "options":Landroid/graphics/BitmapFactory$Options;
-    :cond_2
+    :cond_1
     const/4 v2, 0x0
 
     goto :goto_0
@@ -852,14 +848,14 @@
     .restart local v2    # "isMtkPlatform":Z
     .restart local v4    # "r":Landroid/content/res/Resources;
     .restart local v5    # "wallpapaerName":Ljava/lang/String;
-    :cond_3
+    :cond_2
     const-string v8, "CN"
 
     invoke-virtual {v0, v8}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
 
     move-result v8
 
-    if-eqz v8, :cond_4
+    if-eqz v8, :cond_3
 
     .line 147
     const-string v5, "oppo_default_wallpaper"
@@ -867,7 +863,7 @@
     goto :goto_1
 
     .line 149
-    :cond_4
+    :cond_3
     const-string v5, "oppo_default_wallpaper_exp"
     :try_end_0
     .catch Ljava/lang/OutOfMemoryError; {:try_start_0 .. :try_end_0} :catch_0

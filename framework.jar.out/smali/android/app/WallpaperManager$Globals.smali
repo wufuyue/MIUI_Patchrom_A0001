@@ -323,7 +323,7 @@
 
     move-result v9
 
-    if-eqz v9, :cond_1
+    if-eqz v9, :cond_0
 
     .line 341
     const-string/jumbo v6, "oppo_default_wallpaper_mexico_exp"
@@ -362,13 +362,9 @@
 
     .line 348
     .local v7, "wallpaperID":I
-    if-gtz v7, :cond_0
-
-    .line 349
-    const v7, 0xc08003e
+    const v7, 0x1080220
 
     .line 351
-    :cond_0
     invoke-virtual {p1}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
 
     move-result-object v9
@@ -379,7 +375,7 @@
 
     .line 356
     .local v4, "is":Ljava/io/InputStream;
-    if-eqz v4, :cond_3
+    if-eqz v4, :cond_2
 
     .line 357
     iget-object v9, p0, Landroid/app/WallpaperManager$Globals;->mService:Landroid/app/IWallpaperManager;
@@ -444,7 +440,7 @@
     .line 342
     .restart local v1    # "default_region":Ljava/lang/String;
     .restart local v6    # "wallpapaerName":Ljava/lang/String;
-    :cond_1
+    :cond_0
     :try_start_3
     const-string v9, "CN"
 
@@ -452,7 +448,7 @@
 
     move-result v9
 
-    if-eqz v9, :cond_2
+    if-eqz v9, :cond_1
 
     .line 343
     const-string/jumbo v6, "oppo_default_wallpaper"
@@ -460,7 +456,7 @@
     goto :goto_0
 
     .line 345
-    :cond_2
+    :cond_1
     const-string/jumbo v6, "oppo_default_wallpaper_exp"
     :try_end_3
     .catch Landroid/os/RemoteException; {:try_start_3 .. :try_end_3} :catch_1
@@ -503,7 +499,7 @@
     .end local v6    # "wallpapaerName":Ljava/lang/String;
     .end local v7    # "wallpaperID":I
     .end local v8    # "width":I
-    :cond_3
+    :cond_2
     :goto_2
     move-object v9, v10
 
